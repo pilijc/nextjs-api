@@ -36,7 +36,7 @@ export default function RootLayout({
                 Movie IT
               </p>
               <p className="text-sm text-muted-foreground text-right max-w-[250px] sm:max-w-none">
-                This product uses the TMDB API but is not endorsed or certified by TMDB.
+                This product uses the TMDB API.
               </p>
             </div>
           </footer>

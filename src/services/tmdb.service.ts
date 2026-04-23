@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MovieSearchResult, MovieDetails, MovieCreditsResponse } from "@/types/movie";
+import { MovieSearchResult, MovieDetails, MovieCreditsResponse, MovieVideosResponse } from "@/types/movie";
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
@@ -52,5 +52,21 @@ export async function getMovieDetails(id: number | string): Promise<MovieDetails
  */
 export async function getMovieCredits(id: number | string): Promise<MovieCreditsResponse> {
   const response = await tmdbClient.get<MovieCreditsResponse>(`/movie/${id}/credits`);
+  return response.data;
+}
+
+/**
+ * Fetches the videos (trailers, teasers, etc.) for a specific movie.
+ */
+export async function getMovieVideos(id: number | string): Promise<MovieVideosResponse> {
+  const response = await tmdbClient.get<MovieVideosResponse>(`/movie/${id}/videos`);
+  return response.data;
+}
+
+/**
+ * Fetches the daily trending movies.
+ */
+export async function getTrendingMovies(): Promise<MovieSearchResult> {
+  const response = await tmdbClient.get<MovieSearchResult>("/trending/movie/day");
   return response.data;
 }

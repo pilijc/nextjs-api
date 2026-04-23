@@ -60,4 +60,4 @@ When deploying, ensure that your Render Project Environment Variables contain `D
 
 ## Disclaimer
 
-This product uses the TMDB API but is not endorsed or certified by TMDB.
+This product uses the TMDB API.

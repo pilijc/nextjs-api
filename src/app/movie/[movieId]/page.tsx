@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Star, Clock, Calendar } from "lucide-react";
-import { getMovieDetails, getMovieCredits, getPosterUrl, getBackdropUrl } from "@/services/tmdb.service";
+import { getMovieDetails, getMovieCredits, getMovieVideos, getPosterUrl, getBackdropUrl } from "@/services/tmdb.service";
 import { WatchlistButton } from "@/components/watchlist-button";
 import { ErrorState } from "@/components/ui/error-state";
+import { HeroBanner } from "@/components/hero-banner";
 
 /**
  * Server component that renders the details of a specific movie.
@@ -12,35 +13,32 @@ export default async function MovieDetailPage(props: { params: Promise<{ movieId
   const params = await props.params;
   
   try {
-    const [movie, credits] = await Promise.all([
+    const [movie, credits, videos] = await Promise.all([
       getMovieDetails(params.movieId),
       getMovieCredits(params.movieId),
+      getMovieVideos(params.movieId),
     ]);
 
     const year = movie.release_date ? new Date(movie.release_date).getFullYear() : "N/A";
     const runtime = movie.runtime ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : "N/A";
     const backdropUrl = getBackdropUrl(movie.backdrop_path);
 
+    // Find the official YouTube trailer, or fallback to the first video
+    const trailer = videos.results.find((v) => v.type === "Trailer" && v.site === "YouTube") 
+                 || videos.results.find((v) => v.site === "YouTube");
+    const videoKey = trailer ? trailer.key : null;
+
     return (
       <main className="w-full">
-        {/* Backdrop Header */}
-        <div className="relative h-[30vh] w-full bg-muted md:h-[40vh]">
-          {backdropUrl ? (
-            <Image
-              src={backdropUrl}
-              alt="Backdrop"
-              fill
-              className="object-cover opacity-30"
-              priority
-            />
-          ) : (
-            <div className="h-full w-full bg-slate-900" />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
-        </div>
+        {/* Netflix-style Auto-playing Banner */}
+        <HeroBanner 
+          backdropUrl={backdropUrl} 
+          videoKey={videoKey} 
+          title={movie.title} 
+        />
 
         <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
-          <div className="relative -mt-32 flex flex-col gap-8 md:-mt-48 md:flex-row">
+          <div className="relative z-20 -mt-32 flex flex-col gap-8 md:-mt-48 md:flex-row">
             {/* Poster */}
             <div className="relative aspect-[2/3] w-48 shrink-0 overflow-hidden rounded-lg shadow-lg md:w-72">
               <Image

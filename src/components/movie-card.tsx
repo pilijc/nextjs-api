@@ -18,7 +18,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
 
   return (
     <div className="group relative flex flex-col gap-2 rounded-lg border bg-card p-2 text-card-foreground shadow-sm transition-all hover:shadow-md">
-      <Link href={`/movie/${movie.id}`} className="absolute inset-0 z-10">
+      <Link href={`/movie/${movie.id}`} className="absolute inset-0 z-20">
         <span className="sr-only">View details for {movie.title}</span>
       </Link>
       <div className="relative aspect-[2/3] w-full overflow-hidden rounded-md bg-muted">
