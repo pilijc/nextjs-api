@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MovieSearchResult, MovieDetails, MovieCreditsResponse, MovieVideosResponse } from "@/types/movie";
+import { MovieSearchResult, MovieDetails, MovieCreditsResponse, MovieVideosResponse, PersonSearchResult, PersonMovieCreditsResponse } from "@/types/movie";
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
@@ -68,5 +68,23 @@ export async function getMovieVideos(id: number | string): Promise<MovieVideosRe
  */
 export async function getTrendingMovies(): Promise<MovieSearchResult> {
   const response = await tmdbClient.get<MovieSearchResult>("/trending/movie/day");
+  return response.data;
+}
+
+/**
+ * Searches for people (actors, directors, etc.) by name.
+ */
+export async function searchPerson(query: string): Promise<PersonSearchResult> {
+  const response = await tmdbClient.get<PersonSearchResult>("/search/person", {
+    params: { query, include_adult: false },
+  });
+  return response.data;
+}
+
+/**
+ * Fetches the movie credits (filmography) for a specific person.
+ */
+export async function getPersonMovieCredits(personId: number | string): Promise<PersonMovieCreditsResponse> {
+  const response = await tmdbClient.get<PersonMovieCreditsResponse>(`/person/${personId}/movie_credits`);
   return response.data;
 }

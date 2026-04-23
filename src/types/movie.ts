@@ -36,6 +36,38 @@ export interface MovieCreditsResponse {
   cast: CastMember[];
 }
 
+export interface Person {
+  id: number;
+  name: string;
+  profile_path: string | null;
+  known_for_department: string;
+  known_for: Movie[];
+  popularity: number;
+}
+
+export interface PersonSearchResult {
+  page: number;
+  results: Person[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface PersonMovieCredit {
+  id: number;
+  title: string;
+  poster_path: string | null;
+  release_date: string;
+  vote_average: number;
+  character: string;
+  overview: string;
+  backdrop_path: string | null;
+}
+
+export interface PersonMovieCreditsResponse {
+  id: number;
+  cast: PersonMovieCredit[];
+}
+
 export interface MovieVideo {
   id: string;
   iso_639_1: string;

@@ -78,12 +78,12 @@ export function TrendingCarousel({ movies }: { movies: Movie[] }) {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent w-full md:w-3/4 pointer-events-none" />
           
-          {/* Content overlay */}
-          <div className="absolute inset-0 z-20 flex flex-col justify-end pb-16 sm:pb-24 px-6 sm:px-12 md:px-24 pointer-events-none">
+          {/* Content overlay — sits at the bottom, away from the navbar */}
+          <div className="absolute inset-0 z-20 flex flex-col justify-end pb-12 sm:pb-20 px-6 sm:px-12 md:px-24 pointer-events-none">
             <div className="max-w-2xl">
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tighter mb-4 uppercase drop-shadow-lg leading-none">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tighter mb-3 uppercase drop-shadow-lg leading-none">
                 {movie.title}
-              </h1>
+              </h2>
               
               <div className="flex items-center gap-3 text-sm sm:text-base font-semibold text-slate-300 mb-6 drop-shadow">
                 <span className="flex items-center gap-1 text-red-500">
