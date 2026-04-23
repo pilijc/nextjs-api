@@ -1,13 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
 import { Movie } from "@/types/movie";
 import { getPosterUrl } from "@/services/tmdb.service";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 /**
  * Renders a movie card with poster, title, year, and rating.
  */
 export function MovieCard({ movie }: { movie: Movie }) {
+  const [isLoaded, setIsLoaded] = useState(false);
   const year = movie.release_date ? new Date(movie.release_date).getFullYear() : "N/A";
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "NR";
 
@@ -16,14 +21,18 @@ export function MovieCard({ movie }: { movie: Movie }) {
       <Link href={`/movie/${movie.id}`} className="absolute inset-0 z-10">
         <span className="sr-only">View details for {movie.title}</span>
       </Link>
-      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-md bg-muted">
+      <div className={cn("relative aspect-[2/3] w-full overflow-hidden rounded-md bg-muted", !isLoaded && movie.poster_path && "animate-pulse")}>
         {movie.poster_path ? (
           <Image
             src={getPosterUrl(movie.poster_path)}
             alt={`Poster for ${movie.title}`}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className={cn(
+              "object-cover transition-all duration-500 group-hover:scale-105",
+              isLoaded ? "opacity-100 blur-0" : "opacity-0 blur-md"
+            )}
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
+            onLoad={() => setIsLoaded(true)}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">

@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Movie Finder & Watchlist
 
-## Getting Started
+A comprehensive movie search and personal watchlist application built with Next.js App Router, Prisma, PostgreSQL (Supabase), and the TMDB API.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Movie Search:** Fast and responsive movie search by title using the TMDB API.
+- **Detailed Movie Pages:** View full details including poster, backdrop, runtime, genre, ratings, and top cast members.
+- **Personal Watchlist:** Users can add and remove movies from their own persistent watchlist.
+- **Anonymous Sessions:** Watchlists are tied securely to the user's browser session via a `viewerId` without requiring a full authentication/login flow.
+- **Responsive UI:** Clean, modern, accessible interface built with Tailwind CSS and Shadcn UI.
+- **Loading & Error States:** Full `Suspense` loading skeletons and graceful error boundaries for a premium user experience.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS + Shadcn UI
+- **Database:** PostgreSQL (Hosted on Supabase)
+- **ORM:** Prisma
+- **Data Fetching:** Axios
+- **External API:** The Movie Database (TMDB) API v4
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Local Development Setup
 
-## Learn More
+1. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Environment Variables:**
+   Create a `.env` file in the root of the project with your credentials:
+   ```env
+   # Transaction pooler (for serverless environments/standard queries)
+   DATABASE_URL="postgresql://postgres.[your-project]:[encoded-password]@aws-0-[region].pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   # Session pooler (for Prisma migrations)
+   DIRECT_URL="postgresql://postgres.[your-project]:[encoded-password]@aws-0-[region].pooler.supabase.com:5432/postgres"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   # TMDB v4 Read Access Token
+   TMDB_ACCESS_TOKEN="your_tmdb_token_here"
+   ```
 
-## Deploy on Vercel
+3. **Initialize Database Schema:**
+   Sync the Prisma schema with your PostgreSQL database:
+   ```bash
+   npx prisma db push
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Run the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+This application is configured for seamless deployment on **Render**. 
+When deploying, ensure that your Render Project Environment Variables contain `DATABASE_URL`, `DIRECT_URL`, and `TMDB_ACCESS_TOKEN`. Render will automatically run `prisma generate` during the build phase.
+
+## Disclaimer
+
+This product uses the TMDB API but is not endorsed or certified by TMDB.
