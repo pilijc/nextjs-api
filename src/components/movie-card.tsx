@@ -21,21 +21,24 @@ export function MovieCard({ movie }: { movie: Movie }) {
       <Link href={`/movie/${movie.id}`} className="absolute inset-0 z-10">
         <span className="sr-only">View details for {movie.title}</span>
       </Link>
-      <div className={cn("relative aspect-[2/3] w-full overflow-hidden rounded-md bg-muted", !isLoaded && movie.poster_path && "animate-pulse")}>
+      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-md bg-muted">
+        {movie.poster_path && (
+          <div className={cn("absolute inset-0 bg-muted/80 animate-pulse transition-opacity duration-500 z-0", isLoaded ? "opacity-0" : "opacity-100")} />
+        )}
         {movie.poster_path ? (
           <Image
             src={getPosterUrl(movie.poster_path)}
             alt={`Poster for ${movie.title}`}
             fill
             className={cn(
-              "object-cover transition-all duration-500 group-hover:scale-105",
-              isLoaded ? "opacity-100 blur-0" : "opacity-0 blur-md"
+              "object-cover transition-opacity duration-500 z-10 group-hover:scale-105",
+              isLoaded ? "opacity-100" : "opacity-0"
             )}
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
             onLoad={() => setIsLoaded(true)}
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
+          <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground z-10">
             No Poster
           </div>
         )}
