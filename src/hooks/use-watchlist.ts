@@ -13,6 +13,7 @@ export interface WatchlistItem {
   posterPath: string | null;
   releaseDate: string | null;
   voteAverage: number;
+  rating: number | null;
   createdAt: string;
 }
 
@@ -73,6 +74,7 @@ export function useWatchlist() {
       posterPath: movie.poster_path,
       releaseDate: movie.release_date,
       voteAverage: movie.vote_average,
+      rating: null,
       createdAt: new Date().toISOString(),
     };
     
@@ -113,11 +115,29 @@ export function useWatchlist() {
     }
   };
 
+  const updateRating = async (movieId: number, rating: number) => {
+    const viewerId = getOrCreateViewerId();
+    if (!viewerId) return;
+
+    // Optimistic update
+    setWatchlist((prev) =>
+      prev.map((item) => (item.movieId === movieId ? { ...item, rating } : item))
+    );
+
+    try {
+      await axios.patch(`/api/watchlist/${movieId}`, { viewerId, rating });
+      toast.success("Rating updated");
+    } catch (error) {
+      toast.error("Failed to update rating");
+    }
+  };
+
   return {
     watchlist,
     isLoading,
     isInWatchlist,
     addWatchlistItem,
     removeWatchlistItem,
+    updateRating,
   };
 }

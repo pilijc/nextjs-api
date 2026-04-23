@@ -16,6 +16,7 @@ model WatchlistItem {
   posterPath  String?
   releaseDate String?
   voteAverage Float
+  rating      Int?
   createdAt   DateTime @default(now())
 
   @@unique([viewerId, movieId])

@@ -8,12 +8,13 @@ import { getPosterUrl } from "@/services/tmdb.service";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { MovieGridSkeleton } from "@/components/ui/skeleton-card";
+import { RatingStars } from "@/components/rating-stars";
 
 /**
  * Renders the personal watchlist page.
  */
 export default function WatchlistPage() {
-  const { watchlist, isLoading, removeWatchlistItem } = useWatchlist();
+  const { watchlist, isLoading, removeWatchlistItem, updateRating } = useWatchlist();
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
@@ -85,6 +86,10 @@ export default function WatchlistPage() {
                   <div className="mt-2 flex items-center gap-1 text-sm font-medium">
                     <Star className="size-4 fill-primary text-primary" aria-hidden="true" />
                     <span>{rating}</span>
+                  </div>
+                  <div className="mt-2 flex flex-col gap-1 border-t pt-2 z-20 relative">
+                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Your Rating</span>
+                    <RatingStars initialRating={item.rating} onRate={(r) => updateRating(item.movieId, r)} />
                   </div>
                 </div>
               </div>
