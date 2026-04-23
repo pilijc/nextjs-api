@@ -8,13 +8,13 @@ import { ErrorState } from "@/components/ui/error-state";
 /**
  * Server component that renders the details of a specific movie.
  */
-export default async function MovieDetailPage(props: { params: Promise<{ id: string }> }) {
+export default async function MovieDetailPage(props: { params: Promise<{ movieId: string }> }) {
   const params = await props.params;
   
   try {
     const [movie, credits] = await Promise.all([
-      getMovieDetails(params.id),
-      getMovieCredits(params.id),
+      getMovieDetails(params.movieId),
+      getMovieCredits(params.movieId),
     ]);
 
     const year = movie.release_date ? new Date(movie.release_date).getFullYear() : "N/A";
