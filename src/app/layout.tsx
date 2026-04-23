@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { AppNavbar } from "@/components/app-navbar"
 
 export const metadata: Metadata = {
-  title: "Movie Finder and Watchlist",
+  title: "Movie IT",
   description: "Search for movies and maintain a personal watchlist.",
 };
 
@@ -33,7 +33,7 @@ export default function RootLayout({
           <footer className="border-t py-6 md:py-0">
             <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
               <p className="text-sm text-muted-foreground">
-                Movie Finder & Watchlist
+                Movie IT
               </p>
               <p className="text-sm text-muted-foreground text-right max-w-[250px] sm:max-w-none">
                 This product uses the TMDB API but is not endorsed or certified by TMDB.

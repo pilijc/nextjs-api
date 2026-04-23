@@ -14,7 +14,7 @@ export function AppNavbar() {
           <span className="flex size-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Film className="size-5" aria-hidden="true" />
           </span>
-          <span>Movie Finder</span>
+          <span>Movie IT</span>
         </Link>
 
         <nav className="flex items-center gap-2" aria-label="Main navigation">

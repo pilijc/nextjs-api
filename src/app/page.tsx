@@ -18,7 +18,7 @@ export default function Page() {
       <section className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div className="space-y-7">
           <div className="space-y-4">
-            <p className="text-sm font-medium text-primary">Movie Finder and Watchlist</p>
+            <p className="text-sm font-medium text-primary">Movie IT</p>
             <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl">
               Find your next movie and keep a watchlist ready.
             </h1>
