@@ -1,7 +1,12 @@
 import Link from "next/link"
 import { Search, ListVideo } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Suspense } from "react"
 import { SearchBar } from "@/components/search-bar"
+
+function SearchBarFallback() {
+  return <div className="h-11 w-full max-w-2xl rounded-md border bg-muted animate-pulse" />
+}
 import { Separator } from "@/components/ui/separator"
 
 /**
@@ -22,7 +27,9 @@ export default function Page() {
             </p>
           </div>
 
-          <SearchBar />
+          <Suspense fallback={<SearchBarFallback />}>
+            <SearchBar />
+          </Suspense>
           <p className="text-sm text-muted-foreground">
             This product uses the TMDB API but is not endorsed or certified by TMDB.
           </p>

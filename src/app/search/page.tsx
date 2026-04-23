@@ -49,7 +49,9 @@ export default async function SearchPage(props: { searchParams: Promise<{ query?
       </div>
 
       <div className="mb-8">
-        <SearchBar defaultValue={query} />
+        <Suspense fallback={<div className="h-11 w-full max-w-2xl rounded-md border bg-muted animate-pulse" />}>
+          <SearchBar defaultValue={query} />
+        </Suspense>
       </div>
 
       <Suspense
